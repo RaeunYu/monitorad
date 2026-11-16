@@ -27,7 +27,7 @@ Lead는 오케스트레이터이며 팀원을 스폰하고 사용자와 대화�
 | issue-triager | 이슈 분류 + agent brief 작성 |
 | docs-writer | `CONTEXT.md`/ADR/README 등 문서, 작업 브랜치 커밋 |
 
-역할 분리는 하네스 ACL이 아니라 **프롬프트 계약 + 태스크 보드 소유권 + Lead 최종 검토**로 강제하고, GitHub ruleset은 `main` 보호(PR 필수·force-push 금지·삭제 금지·squash 전용)만 강제한다(`docs/agents/github-settings.md`). 필요한 역할만 스폰하며(최대 8명), 이름은 세션 동안 유지된다. 같은 역할은 기존 팀원을 `send_message`로 재사용하고, 스폰 이름은 새로 만들 수 없다.
+역할 분리는 하네스 ACL이 아니라 **프롬프트 계약 + 태스크 보드 소유권 + Lead 최종 검토**로 강제하고, GitHub ruleset은 `main` 보호(PR 필수·force-push 금지·삭제 금지·squash 전용)만 강제한다(`docs/agents/github-settings.md`). 필요한 역할만 스폰하며(최대 8명), 이름은 세션 동안 유지된다. 실패한 스폰의 이름은 다시 쓸 수 없으므로 새 이름으로 재시도한다. 같은 역할의 기존 팀원은 `send_message`로 재사용한다.
 
 ## 세션 시작
 

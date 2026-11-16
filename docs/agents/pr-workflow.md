@@ -34,7 +34,7 @@ Phase 1에는 PR 오픈 웹훅이 없고 draft PR도 쓰지 않으므로, 리뷰
 ## 3. 리뷰 기준과 포맷
 
 - 2축 리뷰: **Spec**(연결 이슈의 수용 기준 충족?) + **Standards**(`AGENTS.md`·`docs/agents/` 규칙 준수?). `code-review` 스킬을 사용한다.
-- `code-review` 스킬은 두 축을 병렬 서브에이전트로 수행한다. 하위 서브에이전트 스폰이 불가한 세션(Phase 1 팀원, delegation depth 0)이면 두 축을 인라인으로 수행한다.
+- `code-review` 스킬은 두 축을 병렬 서브에이전트로 수행한다. 팀원은 delegation depth 1(하위 서브에이전트 스폰 불가)이므로 Phase 1 팀원 세션에서는 두 축을 인라인으로 수행한다.
 - **심각도 기준**: Critical = 보안·데이터 손실·머지 반드시 차단. Major = 정책/정합성 위반으로 워크플로·동작이 왜곡됨. Minor = 개선·문구·문서화. Critical/Major가 남아 있으면 `REQUEST_CHANGES`.
 - 결과는 PR 코멘트 1건:
 

@@ -17,11 +17,11 @@
 ## CI
 
 - 스택 확정 전: 로컬 테스트가 기준이다.
-- 스택 확정 후: GitHub Actions CI를 도입하고 `main` ruleset에 필수 상태 체크를 추가한다.
+- 스택 확정 후: GitHub Actions CI를 도입하고 `main` ruleset에 필수 상태 체크를 추가한다. 현재 ruleset에는 상태 체크가 없다(`docs/agents/github-settings.md`).
 - 실패 로그는 PR 코멘트가 아니라 CI 로그로 확인해 PR 히스토리를 가볍게 유지한다.
 
 ## 커밋·PR 위생
 
 - Conventional Commits, squash 머지.
-- 1 PR = 1 이슈(코드). PR 크기는 400줄/20파일 이하 권장.
-- 비밀·토큰·`.env`는 커밋하지 않는다. `.gitignore`로 차단하고 발견 시 사용자에게 즉시 보고한다.
+- 1 PR = 1 이슈(코드). PR 크기는 400줄/20파일 이하 권장. 문서 전용 변경은 400줄 초과 시에도 분할 의무가 없다(권고).
+- 비밀·토큰·`.env`는 커밋하지 않는다. 루트 `.gitignore`가 `.env`/`.env.*`(단 `!.env.example`)와 OS·에디터·의존성·빌드 산출물을 차단하며, 유출 의심 시 사용자에게 즉시 보고한다.

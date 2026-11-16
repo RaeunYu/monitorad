@@ -26,7 +26,7 @@
 
 ## 이슈별 브랜치 계획
 
-`issue-triager`가 `ready-for-agent` 브리프를 쓸 때 아래 블록을 포함한다.
+`issue-triager`가 `ready-for-agent` 브리프를 쓸 때 아래 블록을 **초안**으로 포함한다.
 
 ```markdown
 **Branch plan**
@@ -36,7 +36,7 @@
 - 머지 기준: 문서 변경이라 테스트 불필요, 리뷰 APPROVE
 ```
 
-`branch-strategist`는 이 계획이 전략과 맞는지 확인하고, 어긋나면 브리프를 고친다.
+`branch-strategist`가 이 초안이 전략과 맞는지 확인·수정해 확정한다.
 
 ## 커밋
 
@@ -47,9 +47,9 @@
 ## PR과 머지
 
 - PR 제목도 Conventional Commits 형식을 따른다.
-- base는 `main`. PR 전 `main` 최신화는 `git-manager`가 rebase 또는 merge로 처리한다.
-- 머지: squash. `main` 직접 push·force-push·브랜치 강제 삭제는 금지한다.
-- PR 크기: 400 changed lines/20 files 이하 권장. 넘으면 분할을 검토한다.
+- base는 `main`. PR 전 `main` 최신화는 `git-manager`가 **merge**로 처리한다(force-push 금지).
+- 머지: squash. `main` 직접 push·브랜치 강제 삭제는 금지한다. force-push는 모든 브랜치에서 금지한다(`docs/agents/github-settings.md`).
+- PR 크기: 400 changed lines/20 files 이하 권장. 넘으면 분할을 검토한다. 문서 전용 변경은 400줄을 넘어도 분할 의무가 없다(권고).
 
 ## 직렬화
 

@@ -22,6 +22,20 @@ jobs:
       - name: Xcode 버전 확인
         run: xcodebuild -version
 
+      - name: XcodeGen 2.48.0 설치 (프로젝트 드리프트 검사용)
+        run: |
+          curl -fsSL "https://github.com/yonaskolb/XcodeGen/releases/download/2.48.0/xcodegen.zip" \
+            -o "$RUNNER_TEMP/xcodegen.zip"
+          unzip -q "$RUNNER_TEMP/xcodegen.zip" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/xcodegen/bin" >> "$GITHUB_PATH"
+
+      - name: 프로젝트 드리프트 검사
+        run: |
+          xcodegen --version
+          xcodegen generate
+          git diff --exit-code
+          test -z "$(git status --porcelain)" || { git status --porcelain; exit 1; }
+
       - name: 빌드
         run: |
           xcodebuild \

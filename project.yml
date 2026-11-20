@@ -1,0 +1,93 @@
+name: Monitorad
+
+options:
+  bundleIdPrefix: com.raeunyu
+  deploymentTarget:
+    macOS: "26.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: false
+
+packages:
+  MonitoradCore:
+    path: Packages/MonitoradCore
+  MonitoradUI:
+    path: Packages/MonitoradUI
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
+    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "0.1.0"
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: NO
+    SWIFT_STRICT_CONCURRENCY: minimal
+
+targets:
+  Monitorad:
+    type: application
+    platform: macOS
+    sources:
+      - path: App/MonitoradApp
+        excludes:
+          - Info.plist
+    dependencies:
+      - package: MonitoradCore
+        product: MonitoradCore
+      - package: MonitoradUI
+        product: MonitoradUI
+    settings:
+      base:
+        PRODUCT_NAME: Monitorad
+        PRODUCT_BUNDLE_IDENTIFIER: com.raeunyu.monitorad
+        INFOPLIST_FILE: App/MonitoradApp/Info.plist
+        COMBINE_HIDPI_IMAGES: YES
+    info:
+      path: App/MonitoradApp/Info.plist
+      properties:
+        CFBundleDisplayName: monitorad
+        CFBundleName: Monitorad
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        LSUIElement: true
+        NSHighResolutionCapable: true
+        NSHumanReadableCopyright: © 2026 Raeun Yu
+        NSPrincipalClass: NSApplication
+
+  MonitoradCoreTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/MonitoradCoreTests
+    dependencies:
+      - package: MonitoradCore
+        product: MonitoradCore
+    settings:
+      base:
+        PRODUCT_NAME: MonitoradCoreTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.raeunyu.monitorad.coretests
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  Monitorad:
+    build:
+      targets:
+        Monitorad: all
+        MonitoradCoreTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: false
+      targets:
+        - name: MonitoradCoreTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

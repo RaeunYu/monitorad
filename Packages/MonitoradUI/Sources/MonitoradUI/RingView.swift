@@ -1,24 +1,9 @@
 import MonitoradCore
 import SwiftUI
 
-/// 메뉴바 인디케이터에 그리는 링 하나.
-public struct RingModel: Identifiable {
-    public let id: String
-    public let name: String
-    public let value: Double
-    public let tint: Color
-    public let symbolName: String
-
-    public init(id: String, name: String, value: Double, tint: Color, symbolName: String) {
-        self.id = id
-        self.name = name
-        self.value = value
-        self.tint = tint
-        self.symbolName = symbolName
-    }
-}
-
 /// 지표 하나를 표현하는 진행률 링. 진행률 arc와 지표별 색·아이콘을 그린다.
+/// 링 표시 모델(`RingModel`)과 레이아웃은 Core의 ``IndicatorPresentation``이 계산하고,
+/// 이 뷰는 그 결과를 그리기만 한다.
 public struct RingView: View {
     public let progress: Double
     public let tint: Color

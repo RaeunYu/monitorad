@@ -13,6 +13,7 @@ final class AppController {
     private let statusItemController: StatusItemController
     private let popoverController: PopoverController
     private var refreshWorkItem: DispatchWorkItem?
+    private var appActivationObserver: NSObjectProtocol?
 
     init() {
         let registry = MetricRegistry.makeDefault()
@@ -46,15 +47,28 @@ final class AppController {
                 self.refreshPopoverRows()
             }
         }
+        // 시스템 설정에서 권한을 바꾸고 돌아오면 팝오버 안내 행을 즉시 갱신한다.
+        appActivationObserver = NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self, self.popoverController.isShown else { return }
+            self.refreshPopoverState()
+        }
         reconcileLaunchAtLogin()
         // 표시 여부와 무관하게 registry의 모든 지표를 관측해 availability를 최신으로 유지한다.
-        observationCoordinator.startObservingAll()
+        observationCoordinator.startObservingAll(selectedMetricIDs: settingsStore.settings.selectedMetricIDs)
         refreshIndicator()
     }
 
     func stop() {
         refreshWorkItem?.cancel()
         refreshWorkItem = nil
+        if let appActivationObserver {
+            NotificationCenter.default.removeObserver(appActivationObserver)
+            self.appActivationObserver = nil
+        }
         observationCoordinator.stopAll()
         statusItemController.uninstall()
     }
@@ -102,35 +116,20 @@ final class AppController {
     }
 
     private func refreshIndicator() {
-        let selectedIDs = settingsStore.settings.selectedMetricIDs
-        let displayMetrics = registry.resolveDisplayMetrics(selectedIDs: selectedIDs)
-        let rings = displayMetrics.map { metric in
-            RingModel(
-                id: metric.id,
-                name: metric.displayName,
-                value: metric.value,
-                tint: Color(metric.tint),
-                symbolName: metric.symbolName
-            )
-        }
-        // 선택된 지표가 전부 사용 불가면 링이 0개가 된다. 이때 placeholder와 사유를 함께 보여 준다.
-        let placeholderReason: String?
-        if displayMetrics.isEmpty {
-            placeholderReason = IndicatorEmptyState.message(for: registry.resolveAll(selectedIDs: selectedIDs))
-        } else {
-            placeholderReason = nil
-        }
-        statusItemController.update(rings: rings, placeholderReason: placeholderReason)
+        let selectedMetrics = registry.resolveAll(selectedIDs: settingsStore.settings.selectedMetricIDs)
+        let presentation = IndicatorPresentation.resolve(selectedMetrics: selectedMetrics)
+        statusItemController.update(presentation: presentation)
     }
 
     // MARK: - 설정 변경
 
     /// 설정을 보정·저장하고 인디케이터를 다시 그린다.
-    /// 관측은 모든 지표에 대해 이미 시작되어 있으므로 선택 변경이 관측 범위를 바꾸지 않는다.
+    /// 관측은 모든 지표에 대해 이미 시작되어 있으며, 선택 변경은 폴링 주기 조정에만 반영한다.
     private func updateSettings(_ mutate: (inout MonitoradSettings) -> Void) {
         var updated = settingsStore.settings
         mutate(&updated)
         settingsStore.update(updated)
+        observationCoordinator.updateSelectedMetricIDs(settingsStore.settings.selectedMetricIDs)
         refreshIndicator()
     }
 
@@ -206,7 +205,9 @@ final class AppController {
     private func refreshPopoverState() {
         popoverModel.hudDuration = settingsStore.settings.hudDuration
         popoverModel.replacementEnabled = settingsStore.settings.replacementEnabled
-        popoverModel.showsAccessibilityNotice = !AccessibilityPermission.isTrusted
+        popoverModel.showsAccessibilityNotice = AccessibilityNotice.shouldShow(
+            isTrusted: AccessibilityPermission.isTrusted
+        )
         popoverModel.statusMessage = nil
 
         let actual = LaunchAtLogin.isEnabled

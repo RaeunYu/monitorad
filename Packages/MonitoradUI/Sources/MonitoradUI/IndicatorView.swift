@@ -1,20 +1,18 @@
 import MonitoradCore
 import SwiftUI
 
-/// 메뉴바 인디케이터가 관찰하는 값 묶음. 앱이 링 목록을 갱신하면 뷰가 다시 그린다.
+/// 메뉴바 인디케이터가 관찰하는 표시 상태.
+/// Core의 순수 경계 ``IndicatorPresentation``(링·레이아웃·빈 상태 사유)을 그대로 보관하고,
+/// 앱이 갱신하면 뷰가 다시 그린다.
 public final class IndicatorModel: ObservableObject {
-    @Published public private(set) var rings: [RingModel]
-    /// 표시할 지표가 없을 때 placeholder와 함께 노출할 사유. 링이 있으면 nil.
-    @Published public private(set) var placeholderReason: String?
+    @Published public private(set) var presentation: IndicatorPresentation
 
-    public init(rings: [RingModel] = [], placeholderReason: String? = nil) {
-        self.rings = rings
-        self.placeholderReason = placeholderReason
+    public init(presentation: IndicatorPresentation = IndicatorPresentation(layout: nil, rings: [], placeholderReason: nil)) {
+        self.presentation = presentation
     }
 
-    public func update(rings: [RingModel], placeholderReason: String? = nil) {
-        self.rings = rings
-        self.placeholderReason = rings.isEmpty ? placeholderReason : nil
+    public func update(presentation: IndicatorPresentation) {
+        self.presentation = presentation
     }
 }
 
@@ -29,12 +27,12 @@ public struct IndicatorView: View {
 
     public var body: some View {
         Group {
-            if let layout = IndicatorLayout.resolve(metricCount: model.rings.count) {
+            if let layout = model.presentation.layout {
                 HStack(spacing: layout.ringSpacing) {
-                    ForEach(model.rings) { ring in
+                    ForEach(model.presentation.rings) { ring in
                         RingView(
                             progress: ring.value,
-                            tint: ring.tint,
+                            tint: Color(ring.tint),
                             symbolName: ring.symbolName,
                             diameter: layout.ringDiameter,
                             lineWidth: max(2.0, layout.ringDiameter * 0.13)
@@ -56,7 +54,7 @@ public struct IndicatorView: View {
     }
 
     private var placeholderMessage: String {
-        model.placeholderReason ?? IndicatorEmptyState.defaultMessage
+        model.presentation.placeholderReason ?? IndicatorEmptyState.defaultMessage
     }
 
     private func accessibilityLabel(for ring: RingModel) -> String {

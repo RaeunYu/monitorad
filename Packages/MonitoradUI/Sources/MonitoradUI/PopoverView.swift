@@ -129,8 +129,9 @@ public struct PopoverView: View {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(.system(size: 11))
                     .foregroundStyle(.yellow)
-                Text("키 가로채기에는 Accessibility 권한이 필요합니다.")
+                Text(AccessibilityNotice.message)
                     .font(.system(size: 11))
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Button("시스템 설정 열기") {
                 model.onOpenAccessibilitySettings?()

@@ -80,7 +80,7 @@ final class StatusItemController: NSObject {
             button.target = self
             button.action = #selector(handleClick)
             _ = button.sendAction(on: [.leftMouseUp])
-            button.toolTip = "monitorad 메뉴바 지표"
+            button.toolTip = String(localized: "statusItem.toolTip")
         }
 
         statusItem = item

@@ -4,6 +4,7 @@ options:
   bundleIdPrefix: com.raeunyu
   deploymentTarget:
     macOS: "26.0"
+  developmentLanguage: ko
   createIntermediateGroups: true
   groupSortPosition: top
   generateEmptyDirectories: false
@@ -18,6 +19,7 @@ settings:
   base:
     SWIFT_VERSION: "5.0"
     MACOSX_DEPLOYMENT_TARGET: "26.0"
+    DEVELOPMENT_LANGUAGE: ko
     CURRENT_PROJECT_VERSION: "1"
     MARKETING_VERSION: "0.1.0"
     CODE_SIGN_STYLE: Manual
@@ -34,6 +36,7 @@ targets:
       - path: App/MonitoradApp
         excludes:
           - Info.plist
+      - path: App/Resources
     dependencies:
       - package: MonitoradCore
         product: MonitoradCore
@@ -44,6 +47,7 @@ targets:
         PRODUCT_NAME: Monitorad
         PRODUCT_BUNDLE_IDENTIFIER: com.raeunyu.monitorad
         INFOPLIST_FILE: App/MonitoradApp/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         COMBINE_HIDPI_IMAGES: YES
     info:
       path: App/MonitoradApp/Info.plist

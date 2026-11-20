@@ -38,9 +38,9 @@ public struct PopoverView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("메뉴바 지표")
+            Text(String(localized: "popover.title"))
                 .font(.system(size: 13, weight: .semibold))
-            Text("표시할 지표를 고르고, 손잡이를 드래그해 순서를 바꿉니다.")
+            Text(String(localized: "popover.description"))
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
         }
@@ -60,7 +60,7 @@ public struct PopoverView: View {
 
     private var durationSection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("HUD 표시 시간")
+            Text(String(localized: "popover.duration.title"))
                 .font(.system(size: 12))
             HStack(spacing: 8) {
                 Slider(
@@ -74,11 +74,11 @@ public struct PopoverView: View {
                     in: MonitoradSettings.hudDurationRange,
                     step: 0.1
                 )
-                Text(String(format: "%.1f초", model.hudDuration))
+                Text(String(format: String(localized: "popover.duration.value"), model.hudDuration))
                     .font(.system(size: 11).monospacedDigit())
                     .frame(width: 38, alignment: .trailing)
             }
-            Text("v0.1에서는 값을 저장만 하고, HUD는 v0.2에서 표시합니다.")
+            Text(String(localized: "popover.duration.footnote"))
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
         }
@@ -95,7 +95,7 @@ public struct PopoverView: View {
                     }
                 )
             ) {
-                Text("로그인 시 시작")
+                Text(String(localized: "popover.launchAtLogin"))
                     .font(.system(size: 12))
             }
             .toggleStyle(.switch)
@@ -110,13 +110,13 @@ public struct PopoverView: View {
                     }
                 )
             ) {
-                Text("HUD 대체")
+                Text(String(localized: "popover.hudReplacement"))
                     .font(.system(size: 12))
             }
             .toggleStyle(.switch)
             .controlSize(.small)
 
-            Text("HUD 대체는 v0.2 replacement 모드에서 사용됩니다. 지금은 설정만 저장합니다.")
+            Text(String(localized: "popover.hudReplacement.footnote"))
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -133,7 +133,7 @@ public struct PopoverView: View {
                     .font(.system(size: 11))
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Button("시스템 설정 열기") {
+            Button(String(localized: "popover.accessibility.openSettings")) {
                 model.onOpenAccessibilitySettings?()
             }
             .controlSize(.small)
@@ -148,11 +148,11 @@ public struct PopoverView: View {
 
     private var footer: some View {
         HStack {
-            Text("monitorad \(AppVersion.display)")
+            Text(String(format: String(localized: "popover.version"), AppVersion.display))
                 .font(.system(size: 10))
                 .foregroundStyle(.tertiary)
             Spacer()
-            Button("종료") {
+            Button(String(localized: "popover.quit")) {
                 model.onQuit?()
             }
             .controlSize(.small)
@@ -200,7 +200,7 @@ private struct MetricRowView: View {
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
                     .draggable(row.id)
-                    .help("드래그로 순서 변경")
+                    .help(String(localized: "popover.reorder.help"))
             }
         }
         .padding(.vertical, 2)

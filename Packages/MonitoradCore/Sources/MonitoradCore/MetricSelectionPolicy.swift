@@ -47,11 +47,15 @@ public enum MetricSelectionPolicy {
         knownMetricIDs: [String]
     ) -> String? {
         if selectedIDs.contains(metricID) {
-            return canDeselect(metricID, selectedIDs: selectedIDs) ? nil : "최소 1개는 표시해야 합니다"
+            return canDeselect(metricID, selectedIDs: selectedIDs)
+                ? nil
+                : LocalizedStrings.localized("selection.minimum", fallback: "최소 1개는 표시해야 합니다")
         }
-        guard knownMetricIDs.contains(metricID) else { return "지원하지 않는 지표입니다" }
+        guard knownMetricIDs.contains(metricID) else {
+            return LocalizedStrings.localized("selection.unsupported", fallback: "지원하지 않는 지표입니다")
+        }
         if selectedIDs.count >= MonitoradSettings.maximumSelectedMetrics {
-            return "최대 3개까지 표시할 수 있습니다"
+            return LocalizedStrings.localized("selection.maximum", fallback: "최대 3개까지 표시할 수 있습니다")
         }
         return nil
     }

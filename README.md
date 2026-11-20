@@ -23,6 +23,20 @@ v0.1은 **메뉴바 인디케이터와 설정 팝오버만** 제공합니다.
 배터리 지표. HUD 표시 시간과 HUD 대체 토글은 v0.1에서 값만 저장하고 v0.2에서 사용합니다.
 (로드맵은 [`docs/product/brief.md`](docs/product/brief.md) 참고)
 
+## 설치
+
+### 경로 1: GitHub Releases에서 설치
+
+1. [Releases](https://github.com/RaeunYu/monitorad/releases)에서 최신 **ad-hoc 서명 빌드**(`Monitorad.zip` 등 릴리스 아티팩트)를 내려받습니다.
+2. 압축을 풀고 `Monitorad.app`을 `/Applications` 폴더로 옮깁니다.
+3. 처음 실행하면 Gatekeeper 경고가 나타날 수 있습니다. [Gatekeeper 안내](#gatekeeper-안내)를 따라 한 번만 허용합니다.
+
+> Releases 빌드는 ad-hoc 서명된 **배포용** 빌드입니다. Xcode로 직접 빌드하는 **개발용** 빌드와 다릅니다.
+
+### 경로 2: 소스에서 빌드
+
+공개 릴리스가 아직 없거나 직접 빌드하려면 아래 [요구 사항](#요구-사항)과 [빌드·실행](#빌드실행)을 따릅니다.
+
 ## 요구 사항
 
 - macOS 26 이상 (arm64)
@@ -57,8 +71,9 @@ open build/DerivedData/Build/Products/Debug/Monitorad.app
 커밋된 `.xcodeproj`와 결과가 달라지면 CI 드리프트 검사가 실패합니다.
 
 ```bash
-# 예: Homebrew로 설치
-brew install xcodegen   # 2.48.0
+# 예: Homebrew로 설치 — brew는 최신 버전을 설치하므로 버전을 확인한다.
+brew install xcodegen
+xcodegen --version   # 2.48.0인지 확인. 다르면 GitHub Releases의 2.48.0 바이너리를 사용한다.
 xcodegen generate
 ```
 
@@ -85,14 +100,19 @@ xcodegen generate
 - 터미널에서 격리 속성 제거:
 
   ```bash
-  xattr -d com.apple.quarantine /Applications/monitorad.app
+  xattr -d com.apple.quarantine /Applications/Monitorad.app
   ```
+
+허용 후 앱이 실행되면 [권한](#권한) 절에서 필요한 권한을 확인하세요.
 
 ## 권한
 
 - **v0.1**: 권한이 필요하지 않습니다. 볼륨은 CoreAudio(public), 밝기는 private `DisplayServices`를 읽기만 합니다.
-- **v0.2 예정**: 미디어 키 가로채기(replacement 모드)에는 **Accessibility 권한**이 필요합니다.
-  권한이 없으면 companion 모드로 폴백하고 팝오버에 안내 행을 표시합니다.
+- **v0.2 예정**: 미디어 키 가로채기(replacement 모드)를 **켤 때만** **Accessibility(손쉬운 사용) 권한**이 필요합니다.
+  HUD 대체 토글이 꺼져 있으면 companion 모드로 동작하므로 권한이 필요하지 않습니다.
+  권한이 없으면 팝오버에 안내 행과 "시스템 설정 열기" 버튼이 나타납니다.
+- **설정 위치**: 시스템 설정 ▸ 개인정보 보호 및 보안 ▸ 손쉬운 사용에서 **monitorad**를 허용합니다.
+  팝오버의 "시스템 설정 열기" 버튼을 눌러 같은 화면을 열 수도 있습니다.
 
 ## 개발
 
@@ -141,10 +161,18 @@ swift Scripts/generate-app-icon.swift
 
 16/32/64/128/256/512/1024 PNG와 asset catalog `Contents.json`이 다시 생성됩니다.
 
+## 후속 이관
+
+이번 v0.1 문서·브랜딩 PR에서 아래 항목은 범위에서 제외하고 후속으로 이관했습니다.
+
+- **아이콘 재생성 드리프트 CI 검사**: 현재 CI는 XcodeGen 프로젝트 드리프트만 검사하며, 아이콘 PNG 재생성 결과 검사는 아직 없습니다.
+- **`LocalizedStrings` 폴백 명시 단위 테스트**: 현재는 문자열 단언 테스트가 앱 번들이 없는 테스트 러너에서 폴백 경로를 간접 검증합니다.
+- **README 화면 스크린샷**: GUI 캡처 제약으로 이번 PR에서 제외했습니다.
+
 ## 로드맵
 
 - **v0.1**: 스캐폴드 + 지표 추상화 + 메뉴바 인디케이터 + 팝오버 (현재)
-- **v0.2**: legacy HUD 오버레이 + replacement(키 가로채기) + Accessibility/companion
+- **v0.2**: legacy HUD 오버레이 + replacement(키 가로채기) + Accessibility/companion + HUD 표시 시간 소비 + 인디케이터 색상 정책(링 밝은 초록·글리프 흰색) + 팝오버 바깥 클릭 닫기
 - **v1.1**: 키보드 백라이트 지표 + HUD
 - **v2**: 블루투스 기기 배터리 지표, 외장 모니터 밝기(DDC), 영어 localization
 

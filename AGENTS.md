@@ -1,7 +1,7 @@
 # AGENTS.md — monitorad 개발 워크플로 정책
 
 > 이 파일은 이 레포에서 작업하는 모든 에이전트(Lead·팀원·서브에이전트)가 따르는 최상위 정책이다.
-> 제품 목적·도메인은 아직 확정 전이며 `/grill-with-docs`로 별도 확정한다. 이 문서는 **개발 진행 방식**만 다룬다.
+> 제품 목적·범위는 `docs/product/brief.md`, 도메인 용어는 `CONTEXT.md`, 주요 결정은 `docs/adr/`에 있다. 이 문서는 **개발 진행 방식**만 다룬다.
 > 이 문서가 모든 세션에 자동 로드되므로, 상세 규칙은 아래 "문서 지도"의 파일로 밀어 두고 여기에는 트리거와 핵심만 둔다.
 
 ## 핵심 원칙
@@ -63,6 +63,9 @@ Lead는 오케스트레이터이며 팀원을 스폰하고 사용자와 대화�
 
 작업 종류에 맞는 파일을 먼저 읽는다.
 
+- **제품 목적·범위·로드맵** → `docs/product/brief.md`
+- **도메인 용어(글로서리)** → `CONTEXT.md`
+- **Tahoe HUD 실행가능성 조사 근거** → `docs/research/tahoe-hud-feasibility.md`
 - **이슈 생성·조회·라벨·코멘트** → `docs/agents/issue-tracker.md`
 - **트리아지 상태·라벨 문자열, PR에서의 의미** → `docs/agents/triage-labels.md`
 - **도메인 용어·ADR 소비 규칙** → `docs/agents/domain.md`

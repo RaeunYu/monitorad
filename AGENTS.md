@@ -87,7 +87,7 @@ GitHub Issues(`gh` CLI)를 쓴다. PRs as a request surface는 **no**. See `docs
 
 ### Domain docs
 
-단일 컨텍스트다. 루트 `CONTEXT.md` + `docs/adr/`를 소비하고, 파일은 필요할 때 스킬이 지연 생성한다. See `docs/agents/domain.md`.
+단일 컨텍스트다. `CONTEXT.md`·`docs/adr/`·`docs/product/brief.md`를 소비하고, 새 용어·결정은 `/domain-modeling`(← `/grill-with-docs`)으로 추가한다. See `docs/agents/domain.md`.
 
 ## 단계와 예고
 

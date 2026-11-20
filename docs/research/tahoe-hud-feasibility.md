@@ -20,3 +20,33 @@
 
 - 로컬: `/System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/`, Xcode SDK `IOKit.framework/Headers/hidsystem/ev_keymap.h`·`IOLLEvent.h`, `/System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter`, `/System/Library/LoginPlugins/BezelServices.loginPlugin/Contents/MacOS/BezelServices`.
 - 웹: [volumeHUD](https://github.com/dannystewart/volumeHUD), [ClassicHUD.swift](https://github.com/dannystewart/volumeHUD/blob/main/volumeHUD/UI/ClassicHUD.swift), [omlx#1497](https://github.com/jundot/omlx/issues/1497), [macos-26 runner](https://github.com/actions/runner-images/blob/main/images/macos/macos-26-Readme.md), [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [Homebrew Acceptable Casks](https://docs.brew.sh/Acceptable-Casks), [KeyboardBrightnessClient.h](https://github.com/EthanRDoesMC/KBPulse/blob/master/KBPulse/KeyboardBrightnessClient.h).
+
+## 재현 명령 (로컬)
+
+조사 환경: macOS 26.3(25D125), arm64, Xcode 26.x. 시스템 버전에 따라 경로가 달라질 수 있다.
+
+```bash
+# ControlCenter·HUD
+launchctl print gui/$(id -u)/com.apple.controlcenter | head -20
+launchctl print gui/$(id -u)/com.apple.OSDUIHelper 2>/dev/null | grep -E 'state =|runs ='   # 구형 HUD 잡 상태
+plutil -p /System/Library/LaunchAgents/com.apple.controlcenter.plist                      # MachService SystemBanner 확인
+strings /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter | grep -E 'SystemBanner|HUDLayer|showOSD'
+defaults read com.apple.controlcenter                                                     # HUD/OSD 관련 키 유무
+
+# 레거시 글리프 자산
+ls /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/
+sips -s format png /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/OSD_Brightness.pdf --out /tmp/osd_brightness.png
+sips -g pixelWidth -g pixelHeight /tmp/osd_brightness.png
+mdls -name kMDItemPageWidth -name kMDItemPageHeight /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/OSD_Brightness.pdf
+
+# API·키코드
+ioreg -r -c AppleARMBacklight -l | grep -i brightness
+ioreg -r -c KeyboardBacklight -l | grep -i brightness
+strings /System/Library/PrivateFrameworks/CoreBrightness.framework/CoreBrightness | grep -i KeyboardBrightness
+SDK=$(xcrun --show-sdk-path)
+grep -n 'NX_KEYTYPE_SOUND_UP\|NX_KEYTYPE_BRIGHTNESS_UP\|NX_KEYTYPE_ILLUMINATION' "$SDK/System/Library/Frameworks/IOKit.framework/Headers/hidsystem/ev_keymap.h"
+grep -n 'NX_SYSDEFINED\|NX_SUBTYPE_AUX_CONTROL_BUTTONS' "$SDK/System/Library/Frameworks/IOKit.framework/Headers/hidsystem/IOLLEvent.h"
+
+# 메뉴바 높이
+swift -e 'import AppKit; print(NSStatusBar.system.thickness)'
+```

@@ -18,7 +18,7 @@ macOS Tahoe(26)는 볼륨·밝기 HUD를 우측 상단의 작은 Liquid Glass �
 ## v1 범위
 
 - **메뉴바 인디케이터**: 항목 1개, 최대 3지표, 1개=큰 링·2~3개=작은 링 나란히, 볼륨·밝기 실시간 표시.
-- **팝오버**: 지표 선택(최대 3·최소 1), 드래그 순서, HUD 표시 시간(0.5–2.0초, 기본 1.0), HUD 대체 on/off, 로그인 시 시작(기본 off), 종료. 권한이 없을 때만 Accessibility 안내 행 노출.
+- **팝오버**: 지표 선택(최대 3·최소 1), 드래그 순서, HUD 표시 시간(0.5–2.0초, 기본 1.0), HUD 대체 on/off(replacement 모드 토글; off면 companion 모드), 로그인 시 시작(기본 off), 종료. 권한이 없을 때만 Accessibility 안내 행 노출.
 - **legacy HUD replacement**(볼륨·밝기): 16블록 미터 + 자체 드로잉 글리프, 동작이 일어난 디스플레이에 표시, 설정된 표시 시간만큼 페이드.
 - **키 가로채기 + Accessibility 권한**, companion 폴백.
 - **키보드 백라이트**: 지표 추상화 경계에만 포함하고 구현은 v1.1로 미룬다.
@@ -44,14 +44,14 @@ macOS Tahoe(26)는 볼륨·밝기 HUD를 우측 상단의 작은 Liquid Glass �
 ## 수용 기준 (v0.1)
 
 - [ ] 메뉴바 전용 앱(LSUIElement)으로 실행되고 Dock 아이콘이 없다.
-- [ ] 볼륨·밝기 변화가 1개 또는 2~3개 링으로 메뉴바에 반영된다.
-- [ ] 팝오버에서 지표 선택·순서·표시 시간(0.5–2.0)·로그인 시작·종료가 동작하고 재실행 후 유지된다.
+- [ ] 볼륨·밝기 변화가 1개 또는 2~3개 링으로 메뉴바에 반영된다. (3링·최대 3지표 검증은 ADR-0002 프로토콜 기반 테스트 목업 지표로 수행)
+- [ ] 팝오버에서 지표 선택·순서·표시 시간(0.5–2.0)·로그인 시작·종료가 동작하고 재실행 후 유지된다. (v0.1은 저장·UI 검증만, 실제 소비는 v0.2)
 - [ ] 최대 3개 제한과 최소 1개 규칙이 지켜진다.
 - [ ] Core 단위 테스트가 통과하고 GitHub Actions `macos-26` PR 체크가 그린이다.
 
 ## 제약
 
-- private API(`DisplayServices`, `CoreBrightness.KeyboardBrightnessClient`)와 미디어 키 가로채기 사용 → App Store 불가, OS 업데이트 취약.
+- private API(v1 `IODisplayParameters.BrightnessMilliNits`, v1.1 `CoreBrightness.KeyboardBrightnessClient`, v2 `DisplayServices`/DDC)와 미디어 키 가로채기 사용 → App Store 불가, OS 업데이트 취약.
 - Tahoe 메뉴바 항목은 ControlCenter가 관리하며 화면 밖으로 밀리는 사례가 보고됨 → 방어 로직 필요.
 - Apple HUD 자산은 재배포 불가 → 글리프는 실측 비율로 자체 드로잉.
 

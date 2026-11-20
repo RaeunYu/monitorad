@@ -22,6 +22,7 @@
 		736826FBD28B864095CF2762 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2046181A768CC0B9AF4571C /* AppDelegate.swift */; };
 		74BA73AB4EF6A66494DA5760 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A1F2E40D55B08AF88D4C9F /* AccessibilityPermission.swift */; };
 		79F09A6E1C7CBC87E8A82938 /* MonitoradCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4FD35D9678D0E69A880ECF1D /* MonitoradCore */; };
+		89D636A57C6F210128D76435 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37CF344E2E125826FE0D2B57 /* Assets.xcassets */; };
 		8A781F7CF5C4FD56FDDD17D5 /* AccessibilityNoticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7170DB07C51EDC142AFE18E /* AccessibilityNoticeTests.swift */; };
 		8BC39BCFB65F2586DE5121C5 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82E05546F92EEA709F3F078 /* StatusItemController.swift */; };
 		9141DE25E9D826F99DAB3510 /* MockAdjustableMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD2E58BC86F7878854AB9D /* MockAdjustableMetric.swift */; };
@@ -42,6 +43,7 @@
 		118A0D61DDE8472187E5EF6E /* MetricSelectionPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricSelectionPolicyTests.swift; sourceTree = "<group>"; };
 		2094D2DBCED8C32E423AF7EA /* Monitorad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Monitorad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A8AC011EDC8FD8CA748A088 /* LaunchAtLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLogin.swift; sourceTree = "<group>"; };
+		37CF344E2E125826FE0D2B57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45CD2E58BC86F7878854AB9D /* MockAdjustableMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdjustableMetric.swift; sourceTree = "<group>"; };
 		50B766FCE29D5280332902E2 /* MonitoradUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MonitoradUI; path = Packages/MonitoradUI; sourceTree = SOURCE_ROOT; };
 		52A21A8AA2B07F810D813F0B /* AudioVolumeResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioVolumeResolutionTests.swift; sourceTree = "<group>"; };
@@ -88,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12ABD80FA36F44A3B5462CF1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37CF344E2E125826FE0D2B57 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		19CC56CC42A45A85A4564787 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				D96DA8A17512137000BDAA0E /* MonitoradApp */,
+				12ABD80FA36F44A3B5462CF1 /* Resources */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -197,6 +208,7 @@
 			buildConfigurationList = 840A5F5AFF1EB40788F993CD /* Build configuration list for PBXNativeTarget "Monitorad" */;
 			buildPhases = (
 				B65CAA777C1BF2767AC76BFE /* Sources */,
+				BDB8DB35C7F290B3D0E88FC8 /* Resources */,
 				94F866EC2D4443ED3E516688 /* Frameworks */,
 			);
 			buildRules = (
@@ -254,6 +266,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BDB8DB35C7F290B3D0E88FC8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89D636A57C6F210128D76435 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		34AC09618D4C9BF4320FF96F /* Sources */ = {

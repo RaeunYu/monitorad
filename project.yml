@@ -34,6 +34,7 @@ targets:
       - path: App/MonitoradApp
         excludes:
           - Info.plist
+      - path: App/Resources
     dependencies:
       - package: MonitoradCore
         product: MonitoradCore
@@ -44,6 +45,7 @@ targets:
         PRODUCT_NAME: Monitorad
         PRODUCT_BUNDLE_IDENTIFIER: com.raeunyu.monitorad
         INFOPLIST_FILE: App/MonitoradApp/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         COMBINE_HIDPI_IMAGES: YES
     info:
       path: App/MonitoradApp/Info.plist

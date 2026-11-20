@@ -45,9 +45,9 @@ final class StatusItemController: NSObject {
         statusItem = nil
     }
 
-    /// 링 목록을 갱신하고 항목 폭을 지표 수에 맞춘다.
-    func update(rings: [RingModel]) {
-        indicatorModel.update(rings: rings)
+    /// 링 목록(또는 표시할 지표가 없을 때의 사유)을 갱신하고 항목 폭을 지표 수에 맞춘다.
+    func update(rings: [RingModel], placeholderReason: String? = nil) {
+        indicatorModel.update(rings: rings, placeholderReason: placeholderReason)
         applyLayout()
     }
 

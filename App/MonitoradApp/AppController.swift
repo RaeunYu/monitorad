@@ -39,10 +39,16 @@ final class AppController {
             self?.togglePopover()
         }
         observationCoordinator.setChangeHandler { [weak self] _, _ in
-            self?.scheduleIndicatorRefresh()
+            guard let self else { return }
+            self.scheduleIndicatorRefresh()
+            // 팝오버가 열려 있으면 해제된 지표를 포함한 가용성 사유도 즉시 갱신한다.
+            if self.popoverController.isShown {
+                self.refreshPopoverRows()
+            }
         }
         reconcileLaunchAtLogin()
-        observationCoordinator.observe(metricIDs: settingsStore.settings.selectedMetricIDs)
+        // 표시 여부와 무관하게 registry의 모든 지표를 관측해 availability를 최신으로 유지한다.
+        observationCoordinator.startObservingAll()
         refreshIndicator()
     }
 
@@ -96,7 +102,8 @@ final class AppController {
     }
 
     private func refreshIndicator() {
-        let displayMetrics = registry.resolveDisplayMetrics(selectedIDs: settingsStore.settings.selectedMetricIDs)
+        let selectedIDs = settingsStore.settings.selectedMetricIDs
+        let displayMetrics = registry.resolveDisplayMetrics(selectedIDs: selectedIDs)
         let rings = displayMetrics.map { metric in
             RingModel(
                 id: metric.id,
@@ -106,17 +113,24 @@ final class AppController {
                 symbolName: metric.symbolName
             )
         }
-        statusItemController.update(rings: rings)
+        // 선택된 지표가 전부 사용 불가면 링이 0개가 된다. 이때 placeholder와 사유를 함께 보여 준다.
+        let placeholderReason: String?
+        if displayMetrics.isEmpty {
+            placeholderReason = IndicatorEmptyState.message(for: registry.resolveAll(selectedIDs: selectedIDs))
+        } else {
+            placeholderReason = nil
+        }
+        statusItemController.update(rings: rings, placeholderReason: placeholderReason)
     }
 
     // MARK: - 설정 변경
 
-    /// 설정을 보정·저장하고, 관측 집합과 인디케이터를 다시 맞춘다.
+    /// 설정을 보정·저장하고 인디케이터를 다시 그린다.
+    /// 관측은 모든 지표에 대해 이미 시작되어 있으므로 선택 변경이 관측 범위를 바꾸지 않는다.
     private func updateSettings(_ mutate: (inout MonitoradSettings) -> Void) {
         var updated = settingsStore.settings
         mutate(&updated)
         settingsStore.update(updated)
-        observationCoordinator.observe(metricIDs: settingsStore.settings.selectedMetricIDs)
         refreshIndicator()
     }
 

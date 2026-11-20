@@ -4,13 +4,17 @@ import SwiftUI
 /// 메뉴바 인디케이터가 관찰하는 값 묶음. 앱이 링 목록을 갱신하면 뷰가 다시 그린다.
 public final class IndicatorModel: ObservableObject {
     @Published public private(set) var rings: [RingModel]
+    /// 표시할 지표가 없을 때 placeholder와 함께 노출할 사유. 링이 있으면 nil.
+    @Published public private(set) var placeholderReason: String?
 
-    public init(rings: [RingModel] = []) {
+    public init(rings: [RingModel] = [], placeholderReason: String? = nil) {
         self.rings = rings
+        self.placeholderReason = placeholderReason
     }
 
-    public func update(rings: [RingModel]) {
+    public func update(rings: [RingModel], placeholderReason: String? = nil) {
         self.rings = rings
+        self.placeholderReason = rings.isEmpty ? placeholderReason : nil
     }
 }
 
@@ -45,9 +49,14 @@ public struct IndicatorView: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                     .frame(width: 24, height: 22)
-                    .accessibilityLabel(Text("표시할 수 있는 지표가 없습니다"))
+                    .help(placeholderMessage)
+                    .accessibilityLabel(Text(placeholderMessage))
             }
         }
+    }
+
+    private var placeholderMessage: String {
+        model.placeholderReason ?? IndicatorEmptyState.defaultMessage
     }
 
     private func accessibilityLabel(for ring: RingModel) -> String {

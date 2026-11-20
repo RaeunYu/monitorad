@@ -22,6 +22,8 @@
 		8BC39BCFB65F2586DE5121C5 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82E05546F92EEA709F3F078 /* StatusItemController.swift */; };
 		9141DE25E9D826F99DAB3510 /* MockAdjustableMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CD2E58BC86F7878854AB9D /* MockAdjustableMetric.swift */; };
 		A20D2528EF0D8024F1B2350F /* PopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5976689ED97B32C8A661ED5 /* PopoverController.swift */; };
+		A8848FFD9CA9210B9BE292BC /* IndicatorEmptyStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4970BE705840520A565CD /* IndicatorEmptyStateTests.swift */; };
+		B5534E3F8360E49AF9E95929 /* BuiltInDisplaySelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DAEEB3B2A18D4037DC1190 /* BuiltInDisplaySelectionTests.swift */; };
 		B8A44D2413BA6271C949855B /* MetricObservationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887CA443C973821A498BE04D /* MetricObservationCoordinatorTests.swift */; };
 		E5A804F5E955DFDFFFE055BA /* IndicatorLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639F3AF97B0C716984A4ABB /* IndicatorLayoutTests.swift */; };
 		E8F0720FD49CDC10D4F2B876 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9629474B8A221847C77981D /* SettingsStoreTests.swift */; };
@@ -41,10 +43,12 @@
 		93E08CFFDA9D784B3BCA96D8 /* MetricRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricRegistryTests.swift; sourceTree = "<group>"; };
 		A2046181A768CC0B9AF4571C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3B886483D7BDAF5EE702CB4 /* MonitoradCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonitoradCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4DAEEB3B2A18D4037DC1190 /* BuiltInDisplaySelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInDisplaySelectionTests.swift; sourceTree = "<group>"; };
 		B82E05546F92EEA709F3F078 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
 		C13A185F46EE161217D33FFC /* MonitoradCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MonitoradCore; path = Packages/MonitoradCore; sourceTree = SOURCE_ROOT; };
 		C9629474B8A221847C77981D /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
 		D5976689ED97B32C8A661ED5 /* PopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverController.swift; sourceTree = "<group>"; };
+		E2C4970BE705840520A565CD /* IndicatorEmptyStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorEmptyStateTests.swift; sourceTree = "<group>"; };
 		E303F62A51BDDD5E74555D0B /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		E5A1F2E40D55B08AF88D4C9F /* AccessibilityPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityPermission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +113,8 @@
 		AF6B260CBE7229EC0B57AF55 /* MonitoradCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				B4DAEEB3B2A18D4037DC1190 /* BuiltInDisplaySelectionTests.swift */,
+				E2C4970BE705840520A565CD /* IndicatorEmptyStateTests.swift */,
 				5639F3AF97B0C716984A4ABB /* IndicatorLayoutTests.swift */,
 				094EC6A89DC64C948206866E /* MenuBarPlacementGuardTests.swift */,
 				887CA443C973821A498BE04D /* MetricObservationCoordinatorTests.swift */,
@@ -233,6 +239,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5534E3F8360E49AF9E95929 /* BuiltInDisplaySelectionTests.swift in Sources */,
+				A8848FFD9CA9210B9BE292BC /* IndicatorEmptyStateTests.swift in Sources */,
 				E5A804F5E955DFDFFFE055BA /* IndicatorLayoutTests.swift in Sources */,
 				21CD105DC6E66E03EF47127A /* MenuBarPlacementGuardTests.swift in Sources */,
 				B8A44D2413BA6271C949855B /* MetricObservationCoordinatorTests.swift in Sources */,

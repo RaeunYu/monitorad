@@ -4,10 +4,11 @@
 
 ## 먼저 읽을 것
 
+- **`docs/product/brief.md`**: 제품 목적·범위·로드맵.
 - 루트 **`CONTEXT.md`**, 또는 루트에 **`CONTEXT-MAP.md`**가 있으면 그 파일이 가리키는 context별 `CONTEXT.md` 중 작업과 관련된 것.
 - **`docs/adr/`**: 작업 영역에 닿는 ADR.
 
-파일이 없으면 조용히 넘어간다. 없음을 지적하거나 먼저 만들자고 제안하지 않는다. `CONTEXT.md`와 ADR은 `/domain-modeling`(← `/grill-with-docs`, `/improve-codebase-architecture`)이 용어·결정이 실제로 정해질 때 지연 생성한다.
+이미 있는 파일은 읽고, 없으면 조용히 넘어간다. 없음을 지적하거나 먼저 만들자고 제안하지 않는다. 새 용어·결정은 `/domain-modeling`(← `/grill-with-docs`, `/improve-codebase-architecture`)으로 추가하고 해당 파일을 갱신한다.
 
 ## 레이아웃: 단일 컨텍스트
 
@@ -16,9 +17,12 @@
 ```
 /
 ├── CONTEXT.md
-├── docs/adr/
-│   ├── 0001-....md
-│   └── 0002-....md
+├── docs/
+│   ├── adr/
+│   │   ├── 0001-....md
+│   │   └── 0002-....md
+│   └── product/
+│       └── brief.md
 └── src/
 ```
 
@@ -37,4 +41,4 @@ ADR과 모순되는 출력은 조용히 덮지 말고 명시한다.
 
 ## 프로젝트 목적
 
-제품 목적과 도메인 용어는 아직 확정 전이다. `/grill-with-docs`로 확정한 뒤 `CONTEXT.md`와 ADR을 만든다.
+제품 목적·범위는 `docs/product/brief.md`, 도메인 용어는 `CONTEXT.md`, 주요 결정은 `docs/adr/`에 있다. 새 용어·결정은 `/domain-modeling`(← `/grill-with-docs`)으로 추가하고 해당 파일을 갱신한다.

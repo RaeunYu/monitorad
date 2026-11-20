@@ -61,15 +61,32 @@ final class MetricRegistryTests: XCTestCase {
         XCTAssertTrue(registry.resolveDisplayMetrics(selectedIDs: ["only"]).isEmpty)
     }
 
-    func testMakeDefaultRegistersBuiltInMetrics() {
-        let registry = MetricRegistry.makeDefault()
-        XCTAssertEqual(registry.ids, [MetricID.volume, MetricID.displayBrightness])
-        XCTAssertNotNil(registry.metric(id: MetricID.volume))
-        XCTAssertNotNil(registry.metric(id: MetricID.displayBrightness))
+    func testMakeDefaultRegistersInjectedMetricsInOrder() {
+        let first = MockAdjustableMetric(id: "first")
+        let second = MockAdjustableMetric(id: "second")
+        let registry = MetricRegistry.makeDefault(metrics: [first, second])
+
+        XCTAssertEqual(registry.ids, ["first", "second"])
+        XCTAssertTrue(registry.metric(id: "first") === first)
+        XCTAssertTrue(registry.metric(id: "second") === second)
+    }
+
+    func testMakeDefaultIgnoresDuplicateMetricIdentifiers() {
+        let first = MockAdjustableMetric(id: "first")
+        let duplicate = MockAdjustableMetric(id: "first")
+        let registry = MetricRegistry.makeDefault(metrics: [first, duplicate])
+
+        XCTAssertEqual(registry.ids, ["first"])
+        XCTAssertTrue(registry.metric(id: "first") === first)
+    }
+
+    func testBuiltInMetricIDsAreStable() {
+        // 설정에 저장되는 식별자이므로 바뀌면 안 된다.
+        XCTAssertEqual(MetricID.builtIn, [MetricID.volume, MetricID.displayBrightness])
     }
 
     func testNewMetricNeedsOnlyOneRegistrationLine() {
-        let registry = MetricRegistry.makeDefault()
+        let registry = MetricRegistry.makeDefault(metrics: [MockAdjustableMetric(id: "existing")])
         let mock = MockAdjustableMetric(id: "mock-metric", displayName: "목업")
         XCTAssertTrue(registry.register(mock))
 

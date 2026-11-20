@@ -25,8 +25,11 @@ public final class MetricObservationCoordinator {
     }
 
     /// registry의 모든 지표 관측을 시작한다. 이미 관측 중인 지표는 건너뛴다.
-    public func startObservingAll() {
+    /// 선택 목록은 폴링 주기 조정(``AdjustableMetricCadence``)에만 쓰인다.
+    public func startObservingAll(selectedMetricIDs: [String]) {
+        let selected = Set(selectedMetricIDs)
         for metric in registry.metrics where !observedMetricIDs.contains(metric.id) {
+            (metric as? AdjustableMetricCadence)?.updatePollingSelection(isSelected: selected.contains(metric.id))
             // 콜백이 지표를 강하게 붙잡지 않도록 식별자만 캡처한다.
             let metricID = metric.id
             metric.onChange = { [weak self] value in
@@ -34,6 +37,14 @@ public final class MetricObservationCoordinator {
             }
             metric.startObserving()
             observedMetricIDs.insert(metric.id)
+        }
+    }
+
+    /// 선택 목록 변경을 폴링 주기 조정 지표에 반영한다. 관측은 계속 유지한다.
+    public func updateSelectedMetricIDs(_ selectedMetricIDs: [String]) {
+        let selected = Set(selectedMetricIDs)
+        for metric in registry.metrics {
+            (metric as? AdjustableMetricCadence)?.updatePollingSelection(isSelected: selected.contains(metric.id))
         }
     }
 

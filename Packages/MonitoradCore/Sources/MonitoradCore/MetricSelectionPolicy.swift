@@ -27,9 +27,12 @@ public enum MetricSelectionPolicy {
         return selectedIDs + [metricID]
     }
 
-    /// 선택된 목록에서 `metricID`를 `targetID` 앞으로 옮긴다. `targetID`가 nil이면 맨 뒤로 보낸다.
+    /// 선택된 목록에서 `metricID`를 `targetID` 앞으로 옮긴다.
+    /// - `targetID`가 nil이면 맨 뒤로 보낸다.
+    /// - 옮길 지표가 없거나 자기 자신 앞으로 옮기는 요청은 순서를 바꾸지 않는다(no-op).
     public static func moving(_ metricID: String, before targetID: String?, selectedIDs: [String]) -> [String] {
         guard let fromIndex = selectedIDs.firstIndex(of: metricID) else { return selectedIDs }
+        if metricID == targetID { return selectedIDs }
         var result = selectedIDs
         result.remove(at: fromIndex)
         let targetIndex = targetID.flatMap { result.firstIndex(of: $0) } ?? result.endIndex

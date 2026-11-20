@@ -103,4 +103,15 @@ final class MetricSelectionPolicyTests: XCTestCase {
         let moved = MetricSelectionPolicy.moving("unknown", before: "a", selectedIDs: threeIDs)
         XCTAssertEqual(moved, threeIDs)
     }
+
+    func testMovingBeforeItselfIsNoOp() {
+        XCTAssertEqual(
+            MetricSelectionPolicy.moving("a", before: "a", selectedIDs: threeIDs),
+            threeIDs
+        )
+        XCTAssertEqual(
+            MetricSelectionPolicy.moving("b", before: "b", selectedIDs: threeIDs),
+            threeIDs
+        )
+    }
 }

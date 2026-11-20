@@ -41,11 +41,17 @@ public final class MetricRegistry {
         resolveAll(selectedIDs: selectedIDs).filter { $0.availability.isAvailable }
     }
 
-    /// v0.1 내장 registry. 새 지표는 구현체를 만든 뒤 여기에 등록 한 줄을 추가한다.
-    public static func makeDefault() -> MetricRegistry {
-        let registry = MetricRegistry()
-        registry.register(SystemVolumeMetric()) // 볼륨 (CoreAudio, public)
-        registry.register(DisplayBrightnessMetric()) // 디스플레이 밝기 (DisplayServices, private)
-        return registry
+    /// v0.1 내장 지표 목록. 새 지표는 구현체를 만든 뒤 여기에 추가한다.
+    public static func builtInMetrics() -> [AdjustableMetric] {
+        [
+            SystemVolumeMetric(), // 볼륨 (CoreAudio, public)
+            DisplayBrightnessMetric(), // 디스플레이 밝기 (DisplayServices, private)
+        ]
+    }
+
+    /// registry 생성. 기본값은 내장 지표 목록이며, 테스트는 mock 목록을 주입해
+    /// 실제 어댑터 생성 없이 등록·순서·중복 규칙을 검증한다.
+    public static func makeDefault(metrics: [AdjustableMetric]? = nil) -> MetricRegistry {
+        MetricRegistry(metrics: metrics ?? builtInMetrics())
     }
 }

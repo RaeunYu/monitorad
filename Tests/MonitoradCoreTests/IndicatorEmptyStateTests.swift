@@ -43,10 +43,12 @@ final class IndicatorEmptyStateTests: XCTestCase {
 
         XCTAssertEqual(selection, ["brightness"])
         XCTAssertEqual(selection.count, MonitoradSettings.minimumSelectedMetrics)
-        XCTAssertTrue(registry.resolveDisplayMetrics(selectedIDs: selection).isEmpty)
-        XCTAssertEqual(
-            IndicatorEmptyState.message(for: registry.resolveAll(selectedIDs: selection)),
-            "내장 디스플레이가 없어 밝기를 읽을 수 없습니다"
+
+        let presentation = IndicatorPresentation.resolve(
+            selectedMetrics: registry.resolveAll(selectedIDs: selection)
         )
+        XCTAssertTrue(presentation.rings.isEmpty)
+        XCTAssertNil(presentation.layout)
+        XCTAssertEqual(presentation.placeholderReason, "내장 디스플레이가 없어 밝기를 읽을 수 없습니다")
     }
 }

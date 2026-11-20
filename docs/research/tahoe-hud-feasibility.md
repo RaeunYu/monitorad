@@ -35,9 +35,9 @@ defaults read com.apple.controlcenter                                           
 
 # 레거시 글리프 자산
 ls /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/
-sips -s format png /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/OSD_Brightness.pdf --out /tmp/osd_brightness.png
+sips -s format png /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/Brightness.pdf --out /tmp/osd_brightness.png
 sips -g pixelWidth -g pixelHeight /tmp/osd_brightness.png
-mdls -name kMDItemPageWidth -name kMDItemPageHeight /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/OSD_Brightness.pdf
+sips --getProperty pixelWidth /System/Library/CoreServices/OSDUIHelper.app/Contents/Resources/Brightness.pdf   # 170.0 (mdls 페이지 속성은 null)
 
 # API·키코드
 ioreg -r -c AppleARMBacklight -l | grep -i brightness

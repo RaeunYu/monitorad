@@ -56,12 +56,14 @@ public final class DisplayServicesBrightnessDataSource: DisplayBrightnessDataSou
             frameworkLoader: { path in dlopen(path, RTLD_NOW) },
             symbolResolver: { handle, name in dlsym(handle, name) },
             frameworkErrorDescription: {
-                dlerror().map { String(cString: $0) } ?? "알 수 없는 오류"
+                dlerror().map { String(cString: $0) }
+                    ?? LocalizedStrings.localized("metric.brightness.unknownError", fallback: "알 수 없는 오류")
             }
         )
     }
 
     /// 테스트에서 로더·리졸버를 주입하기 위한 이니셜라이저.
+    /// 기본 에러 문구는 공개 기본 인자 제약상 한국어 리터럴을 쓰고, 프로덕션 경로는 로컬라이즈된 문구를 넘긴다.
     public init(
         frameworkPath: String = DisplayServicesBrightnessDataSource.defaultFrameworkPath,
         frameworkLoader: @escaping FrameworkLoader,
@@ -70,7 +72,8 @@ public final class DisplayServicesBrightnessDataSource: DisplayBrightnessDataSou
     ) {
         guard let handle = frameworkLoader(frameworkPath) else {
             brightnessFunction = nil
-            loadError = .frameworkUnavailable(reason: "DisplayServices를 불러올 수 없습니다(\(frameworkErrorDescription()))")
+            let format = LocalizedStrings.localized("metric.brightness.frameworkUnavailable", fallback: "DisplayServices를 불러올 수 없습니다(%@)")
+            loadError = .frameworkUnavailable(reason: String(format: format, frameworkErrorDescription()))
             return
         }
         guard let symbol = symbolResolver(handle, Self.brightnessSymbolName) else {

@@ -1,0 +1,40 @@
+/* monitorad 한국어 문자열. 영어 localization은 v2에서 추가한다. */
+
+/* 팝오버 */
+"popover.title" = "메뉴바 지표";
+"popover.description" = "표시할 지표를 고르고, 손잡이를 드래그해 순서를 바꿉니다.";
+"popover.duration.title" = "HUD 표시 시간";
+"popover.duration.value" = "%.1f초";
+"popover.duration.footnote" = "v0.1에서는 값을 저장만 하고, HUD는 v0.2에서 표시합니다.";
+"popover.launchAtLogin" = "로그인 시 시작";
+"popover.hudReplacement" = "HUD 대체";
+"popover.hudReplacement.footnote" = "HUD 대체는 v0.2 replacement 모드에서 사용됩니다. 지금은 설정만 저장합니다.";
+"popover.accessibility.openSettings" = "시스템 설정 열기";
+"popover.quit" = "종료";
+"popover.reorder.help" = "드래그로 순서 변경";
+"popover.version" = "monitorad %@";
+"popover.loginItem.error" = "로그인 시 시작을 바꾸지 못했습니다: %@";
+
+/* 메뉴바 인디케이터 */
+"indicator.accessibility.value" = "%@ %d퍼센트";
+"indicator.placeholder" = "표시할 수 있는 지표가 없습니다";
+"statusItem.toolTip" = "monitorad 메뉴바 지표";
+
+/* 지표 */
+"metric.volume.name" = "볼륨";
+"metric.volume.noOutputDevice" = "출력 장치를 찾을 수 없습니다";
+"metric.volume.unreadableVolume" = "이 출력 장치에서 볼륨 값을 읽을 수 없습니다";
+"metric.displayBrightness.name" = "디스플레이 밝기";
+"metric.brightness.noBuiltInDisplay" = "내장 디스플레이가 없어 밝기를 읽을 수 없습니다";
+"metric.brightness.symbolUnavailable" = "DisplayServicesGetBrightness 심볼을 찾을 수 없습니다";
+"metric.brightness.readFailed" = "디스플레이 밝기 값을 읽을 수 없습니다";
+"metric.brightness.frameworkUnavailable" = "DisplayServices를 불러올 수 없습니다(%@)";
+"metric.brightness.unknownError" = "알 수 없는 오류";
+
+/* 선택 규칙 */
+"selection.minimum" = "최소 1개는 표시해야 합니다";
+"selection.maximum" = "최대 3개까지 표시할 수 있습니다";
+"selection.unsupported" = "지원하지 않는 지표입니다";
+
+/* 권한 */
+"accessibility.notice" = "키 가로채기에는 Accessibility 권한이 필요합니다. (v0.2에서 키 가로채기 도입 예정)";

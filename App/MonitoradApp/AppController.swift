@@ -189,7 +189,10 @@ final class AppController {
             popoverModel.statusMessage = nil
         } catch {
             popoverModel.launchAtLogin = LaunchAtLogin.isEnabled
-            popoverModel.statusMessage = "로그인 시 시작을 바꾸지 못했습니다: \(error.localizedDescription)"
+            popoverModel.statusMessage = String(
+                format: String(localized: "popover.loginItem.error"),
+                error.localizedDescription
+            )
         }
     }
 

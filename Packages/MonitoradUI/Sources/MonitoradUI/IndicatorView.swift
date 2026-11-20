@@ -58,6 +58,7 @@ public struct IndicatorView: View {
     }
 
     private func accessibilityLabel(for ring: RingModel) -> String {
-        "\(ring.name) \(Int((min(max(ring.value, 0), 1) * 100).rounded()))퍼센트"
+        let percent = Int((min(max(ring.value, 0), 1) * 100).rounded())
+        return String(format: String(localized: "indicator.accessibility.value"), ring.name, percent)
     }
 }

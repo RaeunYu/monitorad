@@ -12,7 +12,7 @@ import Foundation
 /// 표시 중일 때는 촘촘하게, 표시되지 않을 때는 느리게 읽는다(``PollingCadence``).
 public final class DisplayBrightnessMetric: AdjustableMetric, AdjustableMetricCadence {
     public let id = MetricID.displayBrightness
-    public let displayName = "디스플레이 밝기"
+    public let displayName = LocalizedStrings.localized("metric.displayBrightness.name", fallback: "디스플레이 밝기")
     public let symbolName = "sun.max.fill"
     public let tint = MetricColor.brightnessOrange
     public var onChange: ((Double) -> Void)?
@@ -110,7 +110,7 @@ public final class DisplayBrightnessMetric: AdjustableMetric, AdjustableMetricCa
             activeDisplayIDs: displayInfo.activeDisplayIDs,
             builtInDisplayIDs: displayInfo.builtInDisplayIDs
         ) else {
-            return .failure("내장 디스플레이가 없어 밝기를 읽을 수 없습니다")
+            return .failure(LocalizedStrings.localized("metric.brightness.noBuiltInDisplay", fallback: "내장 디스플레이가 없어 밝기를 읽을 수 없습니다"))
         }
         do {
             let brightness = try dataSource.readBrightness(from: displayID)
@@ -120,12 +120,12 @@ public final class DisplayBrightnessMetric: AdjustableMetric, AdjustableMetricCa
             case let .frameworkUnavailable(reason):
                 return .failure(reason)
             case .symbolUnavailable:
-                return .failure("DisplayServicesGetBrightness 심볼을 찾을 수 없습니다")
+                return .failure(LocalizedStrings.localized("metric.brightness.symbolUnavailable", fallback: "DisplayServicesGetBrightness 심볼을 찾을 수 없습니다"))
             case .readFailed:
-                return .failure("디스플레이 밝기 값을 읽을 수 없습니다")
+                return .failure(LocalizedStrings.localized("metric.brightness.readFailed", fallback: "디스플레이 밝기 값을 읽을 수 없습니다"))
             }
         } catch {
-            return .failure("디스플레이 밝기 값을 읽을 수 없습니다")
+            return .failure(LocalizedStrings.localized("metric.brightness.readFailed", fallback: "디스플레이 밝기 값을 읽을 수 없습니다"))
         }
     }
 

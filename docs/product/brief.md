@@ -18,11 +18,16 @@ macOS Tahoe(26)는 볼륨·밝기 HUD를 우측 상단의 작은 Liquid Glass �
 ## v1 범위
 
 - **메뉴바 인디케이터**: 항목 1개, 최대 3지표, 1개=큰 링·2~3개=작은 링 나란히, 볼륨·밝기 실시간 표시.
-- **팝오버**: 지표 선택(최대 3·최소 1), 드래그 순서, HUD 표시 시간(0.5–2.0초, 기본 1.0), HUD 대체 on/off(replacement 모드 토글; off면 companion 모드), 로그인 시 시작(기본 off), 종료. 권한이 없을 때만 Accessibility 안내 행 노출.
+- **팝오버**: 지표 선택(최대 3·최소 1), 드래그 순서, HUD 표시 시간(0.5–2.0초, 기본 1.0), HUD 대체 토글(켜면 replacement 모드, 끄면 companion 모드), 로그인 시 시작(기본 off), 종료. 권한이 없을 때만 Accessibility 안내 행 노출.
 - **legacy HUD replacement**(볼륨·밝기): 16블록 미터 + 자체 드로잉 글리프, 동작이 일어난 디스플레이에 표시, 설정된 표시 시간만큼 페이드.
 - **키 가로채기 + Accessibility 권한**, companion 폴백.
 - **키보드 백라이트**: 지표 추상화 경계에만 포함하고 구현은 v1.1로 미룬다.
 - ad-hoc 서명 빌드, GitHub Releases 배포. macOS 26+, arm64.
+
+## v0.2 범위
+
+- **메뉴바 인디케이터 색상 정책**: 링은 밝은 초록(iOS 배터리 충분 색), 링 안 글리프(스피커 등)는 흰색.
+- **팝오버 바깥 클릭 닫기**: 메뉴바 아이콘 재클릭 없이 바깥 클릭(바탕화면·다른 앱 창)에서 닫힌다.
 
 ## 비목표 (v1)
 
@@ -37,7 +42,7 @@ macOS Tahoe(26)는 볼륨·밝기 HUD를 우측 상단의 작은 Liquid Glass �
 ## 로드맵
 
 - **v0.1**: 스캐폴드 + 지표 추상화 + 메뉴바 인디케이터 + 팝오버 + 단위 테스트/CI.
-- **v0.2**: legacy HUD 오버레이 + replacement(키 가로채기) + Accessibility/companion + HUD 표시 시간 설정.
+- **v0.2**: legacy HUD 오버레이 + replacement(키 가로채기) + Accessibility/companion + HUD 표시 시간 설정 + 인디케이터 색상 정책(링 밝은 초록·글리프 흰색) + 팝오버 바깥 클릭 닫기.
 - **v1.1**: 키보드 백라이트 지표 + HUD.
 - **v2**: 배터리 지표(블루투스 기기), 외장 모니터 밝기/테스트, 영어 localization.
 

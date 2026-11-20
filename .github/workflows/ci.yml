@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test (macOS 26)
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Xcode 버전 확인
+        run: xcodebuild -version
+
+      - name: 빌드
+        run: |
+          xcodebuild \
+            -project Monitorad.xcodeproj \
+            -scheme Monitorad \
+            -destination 'platform=macOS' \
+            -derivedDataPath .tools/DerivedData \
+            build
+
+      - name: 테스트
+        run: |
+          xcodebuild \
+            -project Monitorad.xcodeproj \
+            -scheme Monitorad \
+            -destination 'platform=macOS' \
+            -derivedDataPath .tools/DerivedData \
+            test
